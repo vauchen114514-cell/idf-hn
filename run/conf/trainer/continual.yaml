@@ -1,0 +1,18 @@
+name: continual
+_target_: src.trainer_module.continual_trainer.ContinualTrainer
+
+# 字段名与 ContinualTrainer.__init__ 完全对应
+n_epochs: 5              # 每个任务的训练轮数（原 max_epochs_per_task）
+lr: 1e-3                 # 学习率（原 learning_rate）
+weight_decay: 1e-4
+energy_lambda: 0.001     # 能量正则化系数
+grad_clip: 1.0           # 梯度裁剪阈值
+log_every_n_steps: 50
+eval_every_n_tasks: 1
+save_checkpoints: true
+use_wandb: false         # 默认关闭，避免首次测试需要 wandb 登录
+
+# Memory Replay（仅 IDF-HN 支持，其他模型忽略）
+replay_size: 32          # 每步回放的样本数（0 = 关闭）
+replay_lambda: 1.0       # 回放损失权重
+replay_strategy: "random"  # 采样策略："random"=均匀随机 / "energy_priority"=能量反比优先级

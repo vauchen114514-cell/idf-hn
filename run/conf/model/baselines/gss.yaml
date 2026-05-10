@@ -1,0 +1,10 @@
+name: gss
+_target_: src.model_module.baselines.gss.GSSBaseline
+
+# 缓冲区大小（与 ER/IDF-HN 对齐，保证公平比较）
+memory_size: 5000
+
+# 每次 GSS 驱逐评估的候选样本数
+# 越大：梯度多样性越优，但计算开销越高（每候选需一次前向+autograd）
+# 论文设置：通常 10~200；默认 10 可在 GPU 上快速运行
+candidate_size: 10

@@ -1,0 +1,8 @@
+name: kv_cache
+_target_: src.model_module.kv_cache.kv_cache_model.KVCacheModel
+
+# 检索锐度（相当于 Hopfield 的 beta）
+beta: 1.0
+
+# 最大记忆条数（与 IDF-HN 保持一致便于公平对比）
+memory_size: 1000

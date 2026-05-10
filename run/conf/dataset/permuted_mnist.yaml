@@ -1,0 +1,7 @@
+name: permuted_mnist
+_target_: src.data_module.dataset.permuted_mnist.PermutedMNIST
+
+n_tasks: 10
+batch_size: 128
+num_workers: 4
+data_dir: data/mnist

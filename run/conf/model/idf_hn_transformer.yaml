@@ -1,0 +1,31 @@
+name: idf_hn_transformer
+_target_: src.model_module.idf_hn.idf_transformer.IDFHopfieldTransformerClassifier
+
+# DistilBERT encoder 配置（与 idf_hn_distilbert.yaml 保持一致）
+encoder:
+  model_name: distilbert-base-uncased
+  dropout: 0.1
+
+# 交叉注意力逆温度（越大注意力越尖锐）
+beta: 1.0
+
+# KV 缓冲区最大容量
+memory_size: 1000
+
+# IDF 遗忘门参数（同 idf_hn_distilbert.yaml）
+forget_gate:
+  gamma_0: 0.1
+  delta_gamma: 0.5
+  tau: 0.3
+  adaptive_tau: true
+  tau_percentile: 75
+  ema_alpha: 0.9
+
+# KV 驱逐策略：norm_min（驱逐被遗忘最多的槽位）或 fifo
+eviction_policy: norm_min
+
+# 选择性写入阈值（负数=仅写新颖模式；None=始终写入）
+write_threshold: -0.1
+
+# 遗忘机制（input_dependent=IDF 完整模式；none=无遗忘）
+forget_mode: input_dependent

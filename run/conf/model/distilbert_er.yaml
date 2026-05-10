@@ -1,0 +1,9 @@
+name: distilbert_er
+_target_: src.model_module.baselines.distilbert_er.DistilBertER
+
+encoder:
+  model_name: distilbert-base-uncased
+  dropout: 0.1
+
+# 文本回放缓冲区大小（与 idf_hn_distilbert 保持一致）
+memory_size: 1000

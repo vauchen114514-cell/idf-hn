@@ -1,0 +1,12 @@
+name: clipping_hn
+# ClippingHNBaseline — Marinari et al. 2026 Dreaming 机制
+# 1. memory norm clipping（每步写入后裁剪范数至 max_norm）
+# 2. periodic dreaming（每 dream_freq 步对 ~10% 记忆施加 dream_gamma 衰减）
+# 无 ForgetGate，无 Replay 缓冲区
+
+beta: 1.0
+memory_size: 1000
+
+max_norm: 1.0       # 记忆范数上界（Clipping 核心参数）
+dream_freq: 500     # dreaming 触发频率（每 N 步一次）
+dream_gamma: 0.5    # dreaming 衰减率（被选中记忆乘以 1-dream_gamma）

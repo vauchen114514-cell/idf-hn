@@ -1,0 +1,26 @@
+name: ablation
+description: "消融实验：验证各组件独立贡献"
+
+# 消融维度1：遗忘触发机制
+forget_mechanism:
+  - none              # 无遗忘（vanilla MHN）
+  - time_decay        # 时间衰减
+  - static_density    # 静态语义密度
+  - input_dependent   # 输入依赖（IDF，本方法）
+
+# 消融维度2：效率方案
+efficiency:
+  - exact             # 精确 O(N²)
+  - prototype         # Prototype Clustering
+  - prototype_faiss   # Prototype + FAISS ANN
+
+# 消融维度3：Dreaming 配合
+dreaming:
+  - none              # 无梦境
+  - random            # 随机梦境
+  - semantic          # 语义过滤梦境（本方法）
+
+# 消融维度4：冲突阈值 τ
+tau_sweep: [0.3, 0.5, 0.7, 0.9]
+
+dataset: split_mnist   # 消融实验固定使用 Split-MNIST

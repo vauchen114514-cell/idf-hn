@@ -1,0 +1,6 @@
+name: wiki_facts
+data_dir: data/wiki_facts
+n_tasks: 5
+batch_size: 64
+num_workers: 0    # Windows 多进程兼容
+random_baseline: 0.0714  # 1/14，task-oracle 下随机猜测准确率（14 类）

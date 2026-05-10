@@ -1,0 +1,10 @@
+name: split_newsgroups_text
+n_tasks: 5
+classes_per_task: 4
+data_dir: data/newsgroups
+batch_size: 32
+num_workers: 0
+
+# DistilBERT tokenizer 参数
+tokenizer_model: distilbert-base-uncased
+max_length: 128

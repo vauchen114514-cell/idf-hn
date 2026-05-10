@@ -1,0 +1,46 @@
+name: idf_hn_distilbert
+_target_: src.model_module.idf_hn.idf_hopfield_with_encoder.IDFHopfieldNetworkWithEncoder
+
+# DistilBERT encoder 配置
+encoder:
+  model_name: distilbert-base-uncased
+  dropout: 0.1
+
+# Hopfield 基础参数（运行在 768 维 encoder 输出空间）
+beta: 1.0
+memory_size: 1000
+
+# 遗忘门参数（同 idf_hn.yaml）
+forget_gate:
+  gamma_0: 0.1
+  delta_gamma: 0.5
+  tau: 0.3
+  adaptive_tau: true
+  tau_percentile: 75
+  ema_alpha: 0.9
+
+# Prototype Clustering
+memory_bank:
+  type: prototype
+  n_prototypes: 50
+  warmup_steps: 50
+  update_freq: 10
+
+# Dreaming（禁用）
+dreaming:
+  enabled: false
+  freq: 500
+  n_dream_samples: 50
+  semantic_threshold: 0.5
+
+# 记忆驱逐策略
+eviction_policy: norm_min
+
+# Selective Write 阈值
+write_threshold: -0.1
+
+# 遗忘机制
+forget_mode: input_dependent
+
+# 正则化
+lambda_omega: 0.01

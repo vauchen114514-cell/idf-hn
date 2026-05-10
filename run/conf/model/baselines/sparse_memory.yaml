@@ -1,0 +1,6 @@
+name: sparse_memory
+_target_: src.model_module.baselines.sparse_memory.SparseMemoryBaseline
+
+beta: 1.0          # Hopfield 逆温度参数
+memory_size: 1000  # 最大记忆条数（与 IDF-HN 对齐）
+gamma: 0.05        # 常数全局遗忘率（每步均匀衰减）

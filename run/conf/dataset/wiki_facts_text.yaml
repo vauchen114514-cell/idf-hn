@@ -1,0 +1,9 @@
+name: wiki_facts_text
+n_tasks: 5
+data_dir: data/wiki_facts
+batch_size: 32
+num_workers: 0
+
+# DistilBERT tokenizer 参数
+tokenizer_model: distilbert-base-uncased
+max_length: 128

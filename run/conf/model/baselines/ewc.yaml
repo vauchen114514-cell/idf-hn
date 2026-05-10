@@ -1,0 +1,5 @@
+name: ewc
+_target_: src.model_module.baselines.ewc.EWC
+
+hidden_dim: 256
+ewc_lambda: 5000.0   # Fisher 信息矩阵权重

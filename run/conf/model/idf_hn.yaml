@@ -1,0 +1,60 @@
+name: idf_hn
+_target_: src.model_module.idf_hn.idf_hopfield.IDFHopfieldNetwork
+
+# Hopfield 基础参数
+beta: 1.0          # 逆温度参数（检索锐度）
+hidden_dim: 256    # 记忆向量维度
+memory_size: 1000  # 最大记忆条数（N）
+
+# 遗忘门参数
+forget_gate:
+  gamma_0: 0.1         # 基础遗忘率（经调参：0.01→0.1，BWT -0.0617→-0.0173）
+  delta_gamma: 0.5     # 最大额外遗忘率
+  tau: 0.3             # 冲突阈值（能量差 ΔE 的归一化阈值）
+  adaptive_tau: true   # 是否使用自适应 τ（基于历史分布百分位）
+  tau_percentile: 75   # 自适应 τ 的百分位数
+  ema_alpha: 0.9       # EMA 平滑系数（有效窗口 ≈ 10 步；解决训练顺序敏感性导致的高方差）
+
+# Prototype Clustering 参数
+memory_bank:
+  type: prototype
+  n_prototypes: 50     # 原型簇数量 K
+  warmup_steps: 50     # 前 N 步使用精确检索（聚类 warm-up）
+  update_freq: 10      # 每隔多少步重新分配簇
+
+# Dreaming 参数
+dreaming:
+  enabled: false       # 已禁用：dreaming 通过 randperm 污染随机状态，使 BWT -0.0617→-0.1671
+  freq: 500            # 每隔多少步触发 Dreaming（仅 enabled=true 时有效）
+  n_dream_samples: 50  # 每次生成的随机模式数
+  semantic_threshold: 0.5  # 语义过滤余弦相似度阈值
+
+# 记忆驱逐策略
+# fifo:     按写入顺序覆盖最旧记忆（忽视 ForgetGate 的选择性衰减结果）
+# norm_min: 驱逐范数最小（被 ForgetGate 衰减最多）的记忆，让选择性遗忘真正决定留存
+eviction_policy: norm_min
+
+# Neural Networks 论文消融：
+# true  = 最终双缓冲设计，能量缓冲区受 ForgetGate 衰减，回放缓冲区保留原始特征。
+# false = 单缓冲对照，回放直接采样被衰减后的能量缓冲区，用于量化 replay feature collapse。
+dual_buffer: true
+
+# 机制诊断开关：启用后每个训练样本记录 conflict/gamma/tau/memory norm 到 diagnostics.csv。
+diagnostics_enabled: false
+
+# Selective Write 阈值
+# ΔE（conflict）≤ 0 恒成立；接近 0 = 新颖模式（跨任务）；很负 = 冗余模式（同任务）
+# conflict > write_threshold：新颖 → 执行 forget+store
+# conflict ≤ write_threshold：冗余 → 跳过，保护记忆范数不被 23000 次同任务写入拖垮
+# null（默认）= 始终写入（原始行为）
+write_threshold: -0.1
+
+# 遗忘机制消融维度（ablation 用，正常训练保持默认 input_dependent）
+# input_dependent: 完整 IDF-HN（依赖输入冲突 ΔE）
+# time_decay:      固定遗忘率（令 delta_gamma=0 实现）
+# static_density:  按各槽位 Prototype 密度逐槽衰减（不依赖输入）
+# none:            无遗忘（令 gamma_0=0, delta_gamma=0 实现）
+forget_mode: input_dependent
+
+# 正则化
+lambda_omega: 0.01   # Ω_eff 的正则化系数

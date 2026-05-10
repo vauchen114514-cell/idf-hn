@@ -1,0 +1,6 @@
+name: distilbert_finetune
+_target_: src.model_module.baselines.distilbert_finetune.DistilBertFinetune
+
+encoder:
+  model_name: distilbert-base-uncased
+  dropout: 0.1

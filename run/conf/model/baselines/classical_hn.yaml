@@ -1,0 +1,5 @@
+name: classical_hn
+# _target_ 仅供参考，实际使用 ModelFactory 注册表；类名 ClassicalHopfieldBaseline
+
+beta: 1.0
+memory_size: 1000

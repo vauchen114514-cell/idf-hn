@@ -1,0 +1,10 @@
+name: wiki_facts
+data_dir: data/wiki_facts
+n_tasks: 5
+batch_size: 64
+num_workers: 0
+random_baseline: 0.0714  # 1/14
+
+# 句子嵌入特征（all-mpnet-base-v2，768 维）
+feature_type: sentence_emb
+feature_dim: 768

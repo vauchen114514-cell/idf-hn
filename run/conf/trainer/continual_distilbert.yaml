@@ -1,0 +1,18 @@
+name: continual_distilbert
+_target_: src.trainer_module.continual_trainer.ContinualTrainer
+
+# DistilBERT 微调专用参数
+n_epochs: 3              # LLM 微调通常 3 epoch 足够
+lr: 2e-5                 # DistilBERT 标准微调学习率（1e-3 会破坏预训练权重）
+weight_decay: 0.01
+energy_lambda: 0.001
+grad_clip: 1.0
+log_every_n_steps: 50
+eval_every_n_tasks: 1
+save_checkpoints: true
+use_wandb: false
+
+# Memory Replay
+replay_size: 32
+replay_lambda: 1.0
+replay_strategy: "random"

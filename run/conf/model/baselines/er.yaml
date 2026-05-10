@@ -1,0 +1,4 @@
+name: er
+
+# ER 使用同等大小的 Reservoir 缓冲区，与 IDF-HN memory_size 对齐
+memory_size: 5000

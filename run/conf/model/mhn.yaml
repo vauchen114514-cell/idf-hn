@@ -1,0 +1,6 @@
+name: mhn
+_target_: src.model_module.hopfield.mhn_layer.MHNLayer
+
+beta: 1.0
+hidden_dim: 256
+memory_size: 1000

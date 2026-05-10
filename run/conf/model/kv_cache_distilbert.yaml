@@ -1,0 +1,13 @@
+name: kv_cache_distilbert
+_target_: src.model_module.kv_cache.kv_cache_with_encoder.KVCacheModelWithEncoder
+
+# DistilBERT encoder 配置（与 idf_hn_distilbert.yaml 保持一致）
+encoder:
+  model_name: distilbert-base-uncased
+  dropout: 0.1
+
+# 检索锐度
+beta: 1.0
+
+# 最大记忆条数
+memory_size: 1000

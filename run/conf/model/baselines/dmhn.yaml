@@ -1,0 +1,7 @@
+name: dmhn
+beta: 1.0                # 保留字段，DMHN 不使用 beta（留作接口一致）
+
+# DMHN 特有超参（Li et al. 2506.01303）
+dmhn_n_steps: 10         # Euler 积分步数（论文 T=10）
+dmhn_dt: 0.1             # 积分步长 Δt
+dmhn_rank: 16            # WD(u) 低秩参数 r（论文 rank-1；实验取 N//8 以增加容量）

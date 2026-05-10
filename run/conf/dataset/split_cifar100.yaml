@@ -1,0 +1,8 @@
+name: split_cifar100
+_target_: src.data_module.dataset.split_cifar100.SplitCIFAR100
+
+n_tasks: 20
+classes_per_task: 5
+batch_size: 32        # 8GB VRAM 下安全 batch size
+num_workers: 4
+data_dir: data/cifar100

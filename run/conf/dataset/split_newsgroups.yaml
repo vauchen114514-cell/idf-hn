@@ -1,0 +1,11 @@
+name: split_newsgroups
+n_tasks: 5
+classes_per_task: 4
+data_dir: data/newsgroups
+
+# 批量大小（Newsgroups 样本量约为 CIFAR-100 的 1/2，适当增大 batch_size）
+batch_size: 64
+num_workers: 0   # sklearn 加载无需多进程
+
+# 特征维度（TF-IDF → TruncatedSVD 512 维）
+feature_dim: 512
